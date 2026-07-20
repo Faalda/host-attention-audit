@@ -1,0 +1,16 @@
+# Generated artifacts — checkpoints, cached features, logs (large binaries)
+results/
+*.pt
+*.pth
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
