@@ -46,7 +46,7 @@ TEST_N     = 500
 N_MP       = 2
 K_LIST     = [1, 2, 4, 8]
 SEEDS      = [42, 7, 13]
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+RESULTS_DIR = "/home/faldabbas/myproject/attn_diffusion_gen/results"
 
 # ── Tokenizer ──────────────────────────────────────────────────────────────
 class Tokenizer:
@@ -334,6 +334,14 @@ def rouge1_f1(hyp, ref):
 
 def eval_rouge(preds, refs):
     return float(np.mean([rouge1_f1(p, r) for p, r in zip(preds, refs)]))
+
+def eval_rouge_best_of_n(preds, refs_list):
+    """Best-of-N-reference ROUGE-1: max over each example's reference set,
+    then mean over examples. refs_list[i] is the list of references for
+    example i (e.g. 5 MS-COCO captions)."""
+    return float(np.mean([
+        max(rouge1_f1(p, r) for r in refs) for p, refs in zip(preds, refs_list)
+    ]))
 
 # ── Training helpers ───────────────────────────────────────────────────────
 def train_free(enc, dec, loader, n_epochs, device):

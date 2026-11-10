@@ -37,7 +37,7 @@ EPOCHS_MASK_DEN = 50
 MASK_RATES      = [0.1, 0.3, 0.5, 0.7, 0.9, 1.0]
 K_LIST          = [1, 2, 4, 8]
 SEEDS           = [42, 7, 13]
-RESULTS_DIR     = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+RESULTS_DIR     = "/home/faldabbas/myproject/attn_diffusion_gen/results"
 
 # ── Masked noise ────────────────────────────────────────────────────────────
 def mask_attn(A0, mask_rate):

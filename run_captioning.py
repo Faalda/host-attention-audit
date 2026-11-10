@@ -45,7 +45,7 @@ TEST_IMAGES = 300
 EPOCHS_FREE_CAP = 40
 K_LIST      = [1, 2, 4, 8]
 SEEDS       = [42, 7, 13]
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+RESULTS_DIR = "/home/faldabbas/myproject/attn_diffusion_gen/results"
 CACHE_PATH  = os.path.join(RESULTS_DIR, "clip_patch_features.pt")
 
 # ── CLIP patch feature extraction ──────────────────────────────────────────

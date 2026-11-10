@@ -59,7 +59,7 @@ CFG_SCALE   = 2.0   # classifier-free guidance scale > 1 sharpens predictions
 CFG_DROP_P  = 0.15  # probability of dropping X during denoiser training
 KL_LAMBDA   = 0.1   # weight on KL attention supervision loss
 SAL_LAMBDA  = 0.05  # weight on patch-salience grounding loss (fix colour hallucination)
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+RESULTS_DIR = "/home/faldabbas/myproject/attn_diffusion_gen/results"
 CACHE_PATH  = os.path.join(RESULTS_DIR, f"{ENCODER}_patch_features_15k.pt")
 
 # ── Patch feature extraction (CLIP or DINOv2) ─────────────────────────────

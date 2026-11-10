@@ -342,11 +342,26 @@ def preprocess_image(proc, img_bytes_or_pil, device):
 # 7. Main evaluation loop
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_eval(proc, model, items, n_steps, lr, out_path, verbose_interval=10):
+def run_eval(proc, model, items, n_steps, lr, out_path, verbose_interval=10,
+             mismatch=False, seed=0):
+    """
+    mismatch=False: standard oracle inversion toward the TRUE reference captions.
+    mismatch=True:  capacity-artifact control — invert toward a caption drawn from a
+                    DIFFERENT, randomly chosen item, scored against that mismatched
+                    target. A gap that survives real refs but collapses relative to
+                    this control's ceiling is evidence of a routing bottleneck; a
+                    mismatch score near the true-target oracle score means the plan
+                    bias is just high-capacity curve-fitting.
+    """
+    import random as _random
+    rng = _random.Random(seed)
     teacher_scores, oracle_scores = [], []
 
     for idx, item in enumerate(items):
         refs = item["refs"]
+        if mismatch:
+            other_idx = rng.choice([j for j in range(len(items)) if j != idx])
+            refs = [rng.choice(items[other_idx]["refs"])]
 
         # ── Pre-process image ─────────────────────────────────────────────────
         pixel_values = preprocess_image(proc, item["img_bytes"], DEVICE)
@@ -426,10 +441,11 @@ def run_eval(proc, model, items, n_steps, lr, out_path, verbose_interval=10):
 
     results = {
         "model": MODEL_ID,
+        "mismatch_control": mismatch,
         "n_images": len(items),
         "n_steps": n_steps,
         "lr": lr,
-        "scoring": "best-of-5-reference ROUGE-1",
+        "scoring": "mismatch-target ROUGE-1" if mismatch else "best-of-5-reference ROUGE-1",
         "teacher_forced_mean": round(tf_mean, 4),
         "oracle_inverted_mean": round(ora_mean, 4),
         "prediction_gap": round(gap, 4),
@@ -463,10 +479,15 @@ def main():
                    help="COCO dataset offset — skip training images (default: 14000)")
     p.add_argument("--out",      type=str, default=None,
                    help="Output JSON path (default: results/blip2_prediction_gap_n{N}.json)")
+    p.add_argument("--mismatch", action="store_true",
+                   help="Capacity-artifact control: invert toward a caption from a "
+                        "different, randomly chosen item instead of the true reference.")
+    p.add_argument("--seed", type=int, default=0, help="RNG seed for --mismatch pairing.")
     args = p.parse_args()
 
+    suffix = "_mismatch" if args.mismatch else ""
     out_path = args.out or os.path.join(
-        RESULTS, f"blip2_prediction_gap_n{args.n_images}.json"
+        RESULTS, f"blip2_prediction_gap_n{args.n_images}{suffix}.json"
     )
 
     # Reproducibility
@@ -482,7 +503,8 @@ def main():
     print(f"  Total plan params: {N_CROSS_LAYERS} × {N_QUERY} × n_patches")
     print()
 
-    run_eval(proc, model, items, args.n_steps, args.lr, out_path)
+    run_eval(proc, model, items, args.n_steps, args.lr, out_path,
+              mismatch=args.mismatch, seed=args.seed)
 
 
 if __name__ == "__main__":
