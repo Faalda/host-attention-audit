@@ -72,8 +72,8 @@ training stage. A single CUDA GPU is expected; scripts default to CUDA.
 |---|---|
 | Table II (nominal-gap decomposition), Table III (HOST protocol) | `inversion/run_rev_inversion_protocol.py`, `clean_pipeline/run_clean_evaluation.py` |
 | Reference-redundancy null (Sec. IV-C) | rescoring of the same inversion-protocol output against the shuffled job's donor-image references; see `analysis/rescore_rouge.py` |
-| Table IV, Fig. 2 (constructed visual fault, fault-aware repair) | `visual_fault/run_visual_headroom_control.py`, `analysis/score_visual_headroom.py`, `analysis/make_visual_recovery_figure.py` |
-| Donor/all-mean provenance check (repair *and* free-plan inversion, Sec. IV-E) | `visual_fault/run_visual_provenance_control.py`, `visual_fault/run_rev_host_w1_donor_nullmean.py` |
+| Table IV (constructed visual fault, fault-aware repair) | `visual_fault/run_visual_headroom_control.py`, `analysis/score_visual_headroom.py` |
+| Fig. 2 (recovery depends on the correct image: repair *and* free-plan inversion, Sec. IV-E) | `visual_fault/run_visual_provenance_control.py`, `visual_fault/run_rev_host_w1_donor_nullmean.py`, `analysis/make_visual_recovery_figure.py` (reads both results, plotted as two clearly-separated groups since they score different protocols: repair against all five references, inversion held-out) |
 | Fault-severity (K_a) dose-response | `visual_fault/run_rev_dose_response.py` |
 | Table V (validation-calibrated effect matching) | `matched_effect/run_rev_matched_effect_control.py`, `matched_effect/run_rev_matched_effect_audit.py` |
 | Unbounded-bias control (Sec. V-C) | `matched_effect/run_rev_unbounded_logit_control.py`, `matched_effect/run_rev_unbounded_logit_audit.py` |
