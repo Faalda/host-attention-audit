@@ -1,3 +1,4 @@
+import sys
 """
 run_rev_retrain_nmp1_fresh.py — one-off fresh retrain of the frac=1.00, n_mp=1 denoiser.
 
@@ -34,7 +35,8 @@ from run_rev_den_common import (
     load_models, gen_plans, caption, score, summarize, maskgit_cfg_vec, CFG_SCALE,
 )
 from run_rev_denoiser_scaling import recovery
-from run_cap_improved import EPOCHS_DEN
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from clean_pipeline.run_cap_improved import EPOCHS_DEN
 
 SEED = 0
 EPOCHS = EPOCHS_DEN
@@ -50,8 +52,8 @@ def train_monitored(den, A0, pair_img, X, n_epochs, tag=""):
     import random
     import torch.nn.functional as F
     from run_rev_den_common import _epoch_batches
-    from run_sum_masked import mask_attn
-    from run_cap_improved import patch_salience, CFG_DROP_P, SAL_LAMBDA
+    from clean_pipeline.run_sum_masked import mask_attn
+    from clean_pipeline.run_cap_improved import patch_salience, CFG_DROP_P, SAL_LAMBDA
     from run_rev_den_common import LR, BATCH
 
     opt = torch.optim.Adam(den.parameters(), lr=LR)

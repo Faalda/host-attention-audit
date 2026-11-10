@@ -20,13 +20,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from run_summarization import Tokenizer, DEVICE, D_MODEL, N_HEADS, N_LAYERS, L_SUM as L_CAP, BATCH, LR, N_MP
-from run_captioning import PatchProjector, CaptionDecoder, N_CAP_PER
-from run_cap_improved import (N_PATCHES, ENCODER_DIM, N_IMAGES, VAL_IMAGES, TEST_IMAGES,
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from clean_pipeline.run_summarization import Tokenizer, DEVICE, D_MODEL, N_HEADS, N_LAYERS, L_SUM as L_CAP, BATCH, LR, N_MP
+from clean_pipeline.run_captioning import PatchProjector, CaptionDecoder, N_CAP_PER
+from clean_pipeline.run_cap_improved import (N_PATCHES, ENCODER_DIM, N_IMAGES, VAL_IMAGES, TEST_IMAGES,
                               RESULTS_DIR, CACHE_PATH, SoftGuidedCaptionDecoder, CFGDenoiser,
                               maskgit_cfg, patch_salience, CFG_SCALE, CFG_DROP_P, SAL_LAMBDA)
-from run_sum_masked import mask_attn
-from run_rev_eval_metrics import lr1, corpus_bleu_cider, boot_ci
+from clean_pipeline.run_sum_masked import mask_attn
+from inversion.run_rev_eval_metrics import lr1, corpus_bleu_cider, boot_ci
 
 SAVE_DIR = os.path.join(RESULTS_DIR, "saved_plans")
 OUT_DIR = os.path.join(RESULTS_DIR, "revision")

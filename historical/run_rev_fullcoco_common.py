@@ -20,11 +20,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from run_summarization import Tokenizer, DEVICE, D_MODEL, N_HEADS, N_LAYERS, L_SUM as L_CAP, N_MP
-from run_captioning import PatchProjector, CaptionDecoder, N_CAP_PER
-from run_cap_improved import (N_PATCHES, ENCODER_DIM, SoftGuidedCaptionDecoder, CFGDenoiser,
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from clean_pipeline.run_summarization import Tokenizer, DEVICE, D_MODEL, N_HEADS, N_LAYERS, L_SUM as L_CAP, N_MP
+from clean_pipeline.run_captioning import PatchProjector, CaptionDecoder, N_CAP_PER
+from clean_pipeline.run_cap_improved import (N_PATCHES, ENCODER_DIM, SoftGuidedCaptionDecoder, CFGDenoiser,
                               patch_salience, CFG_SCALE, CFG_DROP_P, SAL_LAMBDA, KL_LAMBDA)
-from run_sum_masked import mask_attn
+from clean_pipeline.run_sum_masked import mask_attn
 from run_rev_den_common import maskgit_cfg_vec
 
 ROOT = "/home/faldabbas/myproject/attn_diffusion_gen"

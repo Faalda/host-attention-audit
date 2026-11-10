@@ -1,3 +1,4 @@
+import sys
 """HOST sensitivity on the real frozen small captioner; no model training.
 
 Exclusive-create outputs, physical GPU0 only, local saved inputs only.
@@ -27,8 +28,9 @@ import torch.nn.functional as F
 
 import run_rev_den_common as common
 from run_rev_denoiser_scaling import recovery
-from run_rev_eval_metrics import r1, lr1, boot_ci
-from run_rev_inversion_protocol import dec_generate, make_plan, plan_stats
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_eval_metrics import r1, lr1, boot_ci
+from inversion.run_rev_inversion_protocol import dec_generate, make_plan, plan_stats
 
 
 def sha256(path):

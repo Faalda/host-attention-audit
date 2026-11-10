@@ -9,9 +9,12 @@ run_rev_fullcoco_sanity.py — E9 pre-flight: does the new streaming/int8 pipeli
   4. teacher-forced A0 via the streaming helper == run_rev_den_common.build_A0 on a batch.
 Writes results/full_coco/sanity_old_ckpt.json.
 """
+import sys
+import os
 from run_rev_fullcoco_eval import *
 from run_rev_den_common import build_A0
-from run_cap_improved import CACHE_PATH
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from clean_pipeline.run_cap_improved import CACHE_PATH
 
 OLD = os.path.join(ROOT, "results", "saved_plans")
 T0 = 14000

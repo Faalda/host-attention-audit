@@ -21,12 +21,13 @@ import os, sys, json, random, re
 import torch
 
 sys.path.insert(0, os.path.dirname(__file__))
-from run_rev_inversion_protocol import (
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_inversion_protocol import (
     Tokenizer, DEVICE, D_MODEL, N_HEADS, N_LAYERS, L_CAP, PatchProjector,
     ENCODER_DIM, CACHE_PATH, SoftGuidedCaptionDecoder, SAVE_DIR, OUT_DIR,
     TEST_START, invert,
 )
-from run_rev_eval_metrics import COCO_OBJ, objects, lr1, boot_ci
+from inversion.run_rev_eval_metrics import COCO_OBJ, objects, lr1, boot_ci
 
 SYN2OBJ = {s: o for o, ss in COCO_OBJ.items() for s in ss if " " not in s}
 

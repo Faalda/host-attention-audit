@@ -6,10 +6,13 @@ Summary uses run_rev_interventions.summarize unchanged.
 
 Usage: CUDA_VISIBLE_DEVICES=0 python run_rev_fullcoco_interventions.py --n-images 500
 """
+import sys
+import os
 import argparse
 from run_rev_fullcoco_common import *
-from run_rev_inversion_protocol import dec_generate
-from run_rev_eval_metrics import objects, lr1, corpus_bleu_cider, boot_ci, norm
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_inversion_protocol import dec_generate
+from inversion.run_rev_eval_metrics import objects, lr1, corpus_bleu_cider, boot_ci, norm
 from run_rev_interventions import suppress, grid_neighbours, summarize
 
 def main():

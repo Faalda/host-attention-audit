@@ -10,8 +10,11 @@ Saves denoised test plans (fp32) to results/full_coco/plans_test.pt for the prot
 
 Usage: CUDA_VISIBLE_DEVICES=0 python run_rev_fullcoco_eval.py
 """
+import sys
+import os
 from run_rev_fullcoco_common import *
-from run_rev_eval_metrics import lr1, corpus_bleu_cider, boot_ci, norm
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_eval_metrics import lr1, corpus_bleu_cider, boot_ci, norm
 from pycocoevalcap.bleu.bleu import Bleu
 
 

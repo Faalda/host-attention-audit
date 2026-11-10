@@ -1,4 +1,6 @@
 """CPU artifact verification and trained-oracle reference comparison; no generation."""
+import sys
+import os
 import argparse
 import hashlib
 import json
@@ -7,7 +9,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from run_rev_eval_metrics import boot_ci, r1
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_eval_metrics import boot_ci, r1
 
 
 def digest(path):

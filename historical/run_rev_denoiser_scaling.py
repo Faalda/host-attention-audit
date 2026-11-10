@@ -19,9 +19,12 @@ Evaluation (identical for every model, incl. the saved seed-42 model_denoiser.pt
   * no-routing reference: guided decoder with a UNIFORM plan (every row 1/256).
 Output: results/revision/denoiser_scaling.json
 """
+import sys
+import os
 import time
 from run_rev_den_common import *
-from run_cap_improved import EPOCHS_DEN
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from clean_pipeline.run_cap_improved import EPOCHS_DEN
 
 CKPT_DIR = os.path.join(OUT_DIR, "rev_ckpt"); os.makedirs(CKPT_DIR, exist_ok=True)
 EPOCHS = int(os.environ.get("REV_SMOKE_EPOCHS", EPOCHS_DEN))

@@ -1,9 +1,12 @@
 """Counterfactual object injection for the full-COCO captioner."""
+import sys
+import os
 import argparse
 from run_rev_fullcoco_common import *
-from run_rev_inversion_protocol import dec_generate, invert
-from run_rev_swap_injection import make_target
-from run_rev_eval_metrics import objects, lr1, boot_ci
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root, for clean_pipeline./inversion. imports
+from inversion.run_rev_inversion_protocol import dec_generate, invert
+from inversion.run_rev_swap_injection import make_target
+from inversion.run_rev_eval_metrics import objects, lr1, boot_ci
 
 
 def main():
